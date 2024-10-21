@@ -55,7 +55,7 @@ Run the application:
 
 Copy code
 python app.py
-The application will be running on http://127.0.0.1:5000/.
+The application will be running on whatever port as free based on system to system.
 
 API Endpoints
 1. Create Rule

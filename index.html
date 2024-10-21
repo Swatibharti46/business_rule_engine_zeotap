@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rule Engine - Teresha</title>
+  <style>
+    /* ... (Same CSS styles from the previous response) ... */
+   
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+        color: #343a40;
+      }
+
+      .container {
+        width: 80%;
+        max-width: 800px;
+        margin: 20px auto;
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 30px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: #007bff; /* Blue */
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      h2, h3 {
+        color: #28a745; /* Green */
+        margin-bottom: 10px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+      }
+
+      input[type="text"],
+      textarea,
+      select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      input[type="text"]:focus,
+      textarea:focus,
+      select:focus {
+        outline: none;
+        border-color: #80bdff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+      }
+
+      textarea {
+        min-height: 100px;
+        resize: vertical;
+      }
+
+      button {
+        background-color: #28a745; /* Green */
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #218838;
+      }
+
+      .rule-container {
+        margin-bottom: 15px;
+        border: 1px solid #ced4da;
+        padding: 15px;
+        border-radius: 4px;
+        background-color: #f8f9fa;
+      }
+
+      pre {
+        background-color: #e9ecef;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto; /* Horizontal scrolling for long outputs */
+        font-family: 'Courier New', Courier, monospace;
+      }
+    
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Business Rule Engine</h1> 
+
+    <h2>Create Rule</h2>
+    <form id="create-rule-form">
+      <div>
+        <label for="ruleName">Rule Name:</label>
+        <input type="text" id="ruleName" name="ruleName" placeholder="Enter a descriptive name" required />
+      </div>
+      <div>
+        <label for="ruleString">Rule:</label>
+        <input 
+          type="text" 
+          id="ruleString" 
+          name="ruleString" 
+          placeholder="E.g., (age > 30 AND department = 'Sales') OR (experience > 5)" 
+          required 
+        />
+      </div>
+      <button type="submit">Create Rule</button>
+    </form>
+    <pre id="create-rule-result"></pre> 
+
+    <hr>
+
+    <h2>Combine Rules</h2>
+    <form id="combine-rules-form">
+      <h3>Enter Rules to Combine:</h3>
+      <div id="rules-inputs">
+        <div class="rule-container">
+          <label for="combine-rule1">Rule 1:</label>
+          <input 
+            type="text" 
+            id="combine-rule1" 
+            name="rule1" 
+            placeholder="E.g., age > 25" 
+            required 
+          />
+          <label for="operator1">Operator:</label>
+          <select id="operator1" name="operator1">
+            <option value="AND">AND</option>
+            <option value="OR">OR</option>
+          </select>
+        </div>
+      </div>
+      <button type="button" id="add-rule">Add Another Rule</button>
+      <button type="submit">Combine Rules</button>
+    </form>
+    <pre id="combine-rules-result"></pre>
+
+    <hr>
+    <h2 style="margin-top: 50px;">Evaluate Rule</h2>
+    <form id="evaluate-rule-form">
+      <div>
+        <label for="evaluate-rule-name">Rule Name:</label>
+        <input type="text" id="evaluate-rule-name" name="ruleName" placeholder="Enter the rule name" required />
+      </div>
+      <div>
+        <label for="evaluate-data">Data JSON:</label>
+        <textarea 
+          id="evaluate-data" 
+          name="data" 
+          placeholder="{&#10;  &quot;age&quot;: 35,&#10;  &quot;department&quot;: &quot;Sales&quot;,&#10;  &quot;salary&quot;: 60000,&#10;  &quot;experience&quot;: 3&#10;}" 
+          required
+        ></textarea>
+      </div>
+      <button type="submit">Evaluate Rule</button>
+    </form>
+    <pre id="evaluate-rule-result"></pre>
+  </div>
+
+  <script>
+    // Function to display the AST (You might need to adjust this based on your actual AST structure)
+    function displayAST(ast, targetElementId) {
+      const preElement = document.getElementById(targetElementId);
+      preElement.textContent = JSON.stringify(ast, null, 2); 
+    }
+
+    // Handle Create Rule form submission
+    document.getElementById('create-rule-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const ruleName = document.getElementById('ruleName').value;
+      const ruleString = document.getElementById('ruleString').value;
+
+      try {
+        const response = await fetch('/api/rules/create_rule', { // Replace with your actual backend endpoint
+          method: 'POST',
+          headers: { 'Content'}
+        }

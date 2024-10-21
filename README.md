@@ -79,13 +79,13 @@ Endpoint: /combine_rules
 Method: POST
 Request Body:
 json
-Copy code
+
 {
     "rule_strings": ["(age > 30)", "(income < 50000)"]
 }
 Response:
 json
-Copy code
+
 {
     "message": "Rules combined",
     "ast": { ... }
@@ -95,14 +95,13 @@ Endpoint: /evaluate_rule
 Method: POST
 Request Body:
 json
-Copy code
 {
     "ast": { "type": "operator", "left": { ... }, "right": { ... } },
     "user_data": { "age": 35, "department": "Sales", "income": 45000 }
 }
 Response:
 json
-Copy code
+
 {
     "is_eligible": true
 }
